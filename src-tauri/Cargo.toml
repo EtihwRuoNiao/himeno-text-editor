@@ -1,0 +1,33 @@
+[package]
+name = "himeno-text-editor"
+version = "0.8.0"
+description = "A text editor for Dacapo and Himeno"
+authors = ["EtihwRuoNiao"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/EtihwRuoNiao/himeno-text-editor"
+edition = "2021"
+rust-version = "1.77.2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+name = "app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.5.4", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+log = "0.4"
+# image-png / image-ico：图标解码 PNG / ICO 所需（非 tauri 默认特性）
+# tray-icon：系统托盘所需（可选特性，不启用时 tauri::tray 模块整个不存在）
+tauri = { version = "2.11.0", features = ["image-png", "image-ico", "tray-icon"] }
+tauri-plugin-log = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+tauri-plugin-opener = "2"
+tauri-plugin-shell = "2"
+tauri-plugin-process = "2"
+font-kit = "0.14"

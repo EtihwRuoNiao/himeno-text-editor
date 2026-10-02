@@ -1,0 +1,12 @@
+.vscode/
+dist/
+node_modules/
+测试文件/
+build/
+
+coverage/
+.DS_Store
+*.log
+.env*
+
+himeno-text-editor.json

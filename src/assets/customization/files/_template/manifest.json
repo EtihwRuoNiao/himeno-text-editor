@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "displayName": "示例助手",
+  "symbol": "🌸",
+  "fit": "cover",
+  "avatar": "avatar.png",
+  "bubble": {
+    "variant": "gray",
+    "durationMs": 3000
+  },
+  "quotes": {
+    "zh-CN": "quotes.zh-CN.txt",
+    "en-US": "quotes.en-US.txt"
+  }
+}

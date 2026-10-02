@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Himeno Text Editor — 助手 manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "displayName": {
+      "type": "string",
+      "description": "选择框显示名，缺省 = 文件夹名"
+    },
+    "symbol": {
+      "type": "string",
+      "description": "气泡文字前后缀的表情"
+    },
+    "fit": {
+      "enum": ["cover", "contain"],
+      "description": "头像填充方式，缺省 cover"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "头像文件名（gif / png / apng / webp）；缺省 = 目录内第一张白名单图片"
+    },
+    "bubble": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "variant": {
+          "type": "string",
+          "description": "气泡配色：pink / pinkDeep / yellow / yellowDeep / green / gray / blue / purple"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 60000
+        }
+      }
+    },
+    "quotes": {
+      "type": "object",
+      "propertyNames": { "enum": ["zh-CN", "en-US"] },
+      "additionalProperties": {
+        "type": "string",
+        "description": "台词文件名（相对助手目录），每行一条"
+      }
+    }
+  }
+}
