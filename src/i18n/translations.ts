@@ -183,6 +183,7 @@ export const translations = {
     // Update check
     'update_check': 'Check',
     'update_checking': 'Checking…',
+    'update_latest': 'Up to date',
     'update_failed': 'Check failed',
     'update_available': 'New version',
     'update_err_404': 'No release found (repository is private or has no release yet)',
@@ -376,6 +377,7 @@ export const translations = {
     // 检查更新
     'update_check': '检查更新',
     'update_checking': '检测中…',
+    'update_latest': '已是最新',
     'update_failed': '检测失败',
     'update_available': '检测到新版本',
     'update_err_404': '未找到 Release（仓库未公开或尚未发布）',

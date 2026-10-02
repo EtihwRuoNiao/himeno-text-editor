@@ -57,23 +57,36 @@ export const AboutPanel: React.FC<AboutPanelProps> = ({ showUpdateCheck = false 
   const [checking, setChecking] = useState(false);
   const [failed, setFailed] = useState(false);
   const [failDetail, setFailDetail] = useState('');
+  // 「已是最新」：瞬时态（3 秒后回到「检查更新」），避免按钮看起来毫无反应
+  const [latest, setLatest] = useState(false);
+  const [latestVersion, setLatestVersion] = useState('');
   // 初值即读取持久化记录（渲染期完成，避免徽章闪入）
   const [pending, setPending] = useState<string | null>(() => getPendingUpdate(__APP_VERSION__));
   const failTimerRef = useRef<number | null>(null);
+  const latestTimerRef = useRef<number | null>(null);
 
   useEffect(() => () => {
     if (failTimerRef.current !== null) window.clearTimeout(failTimerRef.current);
+    if (latestTimerRef.current !== null) window.clearTimeout(latestTimerRef.current);
   }, []);
 
   const onCheck = async () => {
     if (checking) return;
     setChecking(true);
     setFailed(false);
+    setLatest(false);
     const res = await checkLatestVersion(__APP_VERSION__);
     setChecking(false);
 
     if (res.kind === 'newer') { setPending(res.version); return; }
-    if (res.kind === 'same') { setPending(null); return; }
+    if (res.kind === 'same') {
+      setPending(null);
+      setLatestVersion(res.version);
+      setLatest(true);
+      if (latestTimerRef.current !== null) window.clearTimeout(latestTimerRef.current);
+      latestTimerRef.current = window.setTimeout(() => setLatest(false), 3000);
+      return;
+    }
 
     // 失败/未解析到版本：保留已有记录（一次网络抖动不应抹掉已知的新版本提示）
     setPending(getPendingUpdate(__APP_VERSION__));
@@ -115,10 +128,10 @@ export const AboutPanel: React.FC<AboutPanelProps> = ({ showUpdateCheck = false 
                 type="button"
                 onClick={onCheck}
                 disabled={checking}
-                title={failed ? failDetail : undefined}
+                title={failed ? failDetail : latest ? `${t('update_latest')} v${latestVersion}` : undefined}
                 className="shrink-0 rounded px-1.5 font-sans text-[11px] text-blue-600 hover:bg-blue-50 disabled:text-gray-400 disabled:cursor-default transition-colors"
               >
-                {checking ? t('update_checking') : failed ? t('update_failed') : t('update_check')}
+                {checking ? t('update_checking') : failed ? t('update_failed') : latest ? t('update_latest') : t('update_check')}
               </button>
             )}
             {pending && (
